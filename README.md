@@ -1,4 +1,4 @@
-COMP3766 Intro to Robotic Mnipulation 
+COMP3766 Intro to Robotic Manipulation 
 -------------------------------------
 
 This Repository contain the dev container used in COMP3766 Labs/tutorials.

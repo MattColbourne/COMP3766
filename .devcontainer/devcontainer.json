@@ -1,7 +1,7 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/python
 {
-  "name": "AI6001 ROS Dev container",
+  "name": "COMP3766 ROS Dev container",
   // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
   // "dockerFile": "Dockerfile",
   "image": "vncprado/ai6001",
