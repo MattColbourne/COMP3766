@@ -55,7 +55,7 @@
   <joint name="joint1" type="revolute">
     <parent link="base_link"/>
     <child link="link1"/>
-    <!-- xyz is p in the homogeneous transform/RPY calculated followin Section B.1.1 -->
+    <!-- xyz is p in the homogeneous transform/RPY calculated following Section B.1.1/B.2 -->
     <origin xyz="0 0 0" rpy="0 0 0"/>
     <axis xyz="0 0 1"/>
     <limit lower="-1.57" upper="1.57" effort="10" velocity="1.0"/>
@@ -65,7 +65,7 @@
   <joint name="joint2" type="revolute">
     <parent link="link1"/>
     <child link="link2"/>
-    <!-- xyz is p in the homogeneous transform/RPY calculated followin Section B.1.1 -->
+    <!-- xyz is p in the homogeneous transform/RPY calculated following Section B.1.1/B.2 -->
     <origin xyz="0 0 0.5" rpy="0 0 0"/> 
     <axis xyz="0 0 1"/> 
     <limit lower="-1.57" upper="1.57" effort="10" velocity="1.0"/>
@@ -75,7 +75,7 @@
   <joint name="joint3" type="revolute">
     <parent link="link2"/>
     <child link="link3"/>
-    <!-- xyz is p in the homogeneous transform/RPY calculated followin Section B.1.1 -->
+    <!-- xyz is p in the homogeneous transform/RPY calculated following Section B.1.1/B.2 -->
     <origin xyz="0 0 0.5" rpy="0 0 0"/>
     <axis xyz="0 0 1"/>
     <limit lower="-1.57" upper="1.57" effort="10" velocity="1.0"/>
