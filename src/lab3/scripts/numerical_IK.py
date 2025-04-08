@@ -5,7 +5,7 @@ import numpy as np
 from geometry_msgs.msg import Pose
 from sensor_msgs.msg import JointState
 
-def compute_ik(position, orientation, initial_guess, learn_rate=0.05, max_iter=1000, tolerance=1e-6):
+def compute_ik(position, orientation, initial_guess, learn_rate=0.025, max_iter=1000, tolerance=1e-6):
     """
     Numerical Inverse Kinematics using Gradient Descent.
     Args:
@@ -91,8 +91,18 @@ def compute_ik(position, orientation, initial_guess, learn_rate=0.05, max_iter=1
         # Compute the error between the target and current pose
         current_position, current_orientation = forward_kinematics(joint_angles)
         position_error = np.linalg.norm(position - current_position)
-        orientation_error = np.linalg.norm(orientation - current_orientation)
-        return position_error + 0.1*orientation_error
+
+        #set orientation error to be the length of the axis angle representation of the difference
+        R_diff = current_orientation.T @ orientation  
+        angle = np.arccos((np.trace(R_diff) - 1) / 2)  
+        axis = (1 / (2 * np.sin(angle))) * np.array([  
+            R_diff[2,1] - R_diff[1,2],  
+            R_diff[0,2] - R_diff[2,0],  
+            R_diff[1,0] - R_diff[0,1]  
+        ])  
+        orientation_error = np.linalg.norm(angle * axis)
+
+        return position_error +  0.5*orientation_error
 
     def compute_gradient(joint_angles):
         # Compute numerical gradient of the error with respect to joint angles
@@ -117,7 +127,11 @@ def compute_ik(position, orientation, initial_guess, learn_rate=0.05, max_iter=1
         if np.linalg.norm(update) < tolerance:
             break
         joint_positions += update
+    current_position, current_orientation = forward_kinematics(joint_positions)
 
+    print("Calculated Position: ",current_position)
+    print("Calculated Orientation: ")
+    print(current_orientation)
     return joint_positions
 
 def pose_callback(msg):
@@ -134,7 +148,7 @@ def pose_callback(msg):
 
     initial_guess = np.zeros(6)  # Initial guess for joint angles
     joint_positions = compute_ik(position, orientation, initial_guess)
-    print(joint_positions)
+    print("Calcualted Joint Angles: ",joint_positions)
 
     joint_msg = JointState()
     joint_msg.header.stamp = rospy.Time.now()
